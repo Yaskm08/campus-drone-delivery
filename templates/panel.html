@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2 class="mt-4 mb-4 text-center">Admin Panel – Manage Deliveries</h2>
+
+    <table class="table table-bordered table-striped align-middle text-center">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Destination</th>
+                <th>Package</th>
+                <th>Status</th>
+                <th>Time</th>
+                <th>Update Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in deliveries %}
+            <tr>
+                <td>{{ d.id }}</td>
+                <td>{{ d.user.username }}</td>
+                <td>{{ d.destination }}</td>
+                <td>{{ d.package_type }}</td>
+                <td>
+                    {% if d.delivery_status == 'pending' %}
+                        <span class="badge bg-warning">Pending</span>
+                    {% elif d.delivery_status == 'in_transit' %}
+                        <span class="badge bg-info">In Transit</span>
+                    {% else %}
+                        <span class="badge bg-success">Delivered</span>
+                    {% endif %}
+                </td>
+                <td>{{ d.request_time|date:"Y-m-d H:i" }}</td>
+                <td>
+                    <form method="post" class="d-flex justify-content-center align-items-center gap-2">
+                        {% csrf_token %}
+                        <input type="hidden" name="delivery_id" value="{{ d.id }}">
+                        <select name="status" class="form-select form-select-sm w-auto">
+                            <option value="pending" {% if d.delivery_status == 'pending' %}selected{% endif %}>Pending</option>
+                            <option value="in_transit" {% if d.delivery_status == 'in_transit' %}selected{% endif %}>In Transit</option>
+                            <option value="delivered" {% if d.delivery_status == 'delivered' %}selected{% endif %}>Delivered</option>
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

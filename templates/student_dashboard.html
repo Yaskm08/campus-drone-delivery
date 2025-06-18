@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h2>Welcome, {{ user.username }}!</h2>
+        <p class="text-muted">Track and manage your delivery requests below.</p>
+    </div>
+
+    <div class="d-flex justify-content-between mb-3">
+        <h4>Your Delivery Requests</h4>
+        <a href="{% url 'create_delivery' %}" class="btn btn-primary">Request New Delivery</a>
+    </div>
+
+    {% if deliveries %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Destination</th>
+                        <th>Package Type</th>
+                        <th>Status</th>
+                        <th>Requested At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for delivery in deliveries %}
+                        <tr>
+                            <td>{{ delivery.id }}</td>
+                            <td>{{ delivery.destination }}</td>
+                            <td>{{ delivery.get_package_type_display }}</td>
+                            <td>
+                                <span class="badge bg-{{ delivery.delivery_status|yesno:'success,warning,secondary' }}">
+                                    {{ delivery.get_delivery_status_display }}
+                                </span>
+                            </td>
+                            <td>{{ delivery.request_time }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-center text-muted">You have no delivery requests yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

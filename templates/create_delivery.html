@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Request a Delivery</h2>
+
+    <form method="post" class="shadow p-4 rounded bg-light">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="destination" class="form-label">Destination</label>
+            <input type="text" class="form-control" id="destination" name="destination" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="package_type" class="form-label">Package Type</label>
+            <select class="form-select" id="package_type" name="package_type" required>
+                <option value="">-- Select Type --</option>
+                <option value="documents">Documents</option>
+                <option value="food">Food</option>
+                <option value="mail">Mail</option>
+            </select>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Submit Request</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
