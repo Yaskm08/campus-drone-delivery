@@ -6,7 +6,7 @@ SECRET_KEY = 'django-insecure-k*#0s!5rggi%80cnsz!v)!5qt-4+z!#4_biy+_o08m+^rkm=kl
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://campus-drone-delivery.onrender.com']
+ALLOWED_HOSTS = ['campus-drone-delivery.onrender.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
